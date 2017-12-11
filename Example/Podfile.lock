@@ -1,0 +1,16 @@
+PODS:
+  - ICObserver (0.1.0)
+
+DEPENDENCIES:
+  - ICObserver (from `../`)
+
+EXTERNAL SOURCES:
+  ICObserver:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ICObserver: 8e1a679fce398e9d12014f5a1935ccd79c37bce1
+
+PODFILE CHECKSUM: 64b3d332fec6a4c15538fda9eff7b429fc0f12ed
+
+COCOAPODS: 1.2.1

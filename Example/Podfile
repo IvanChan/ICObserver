@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ICObserver_Example' do
+  pod 'ICObserver', :path => '../'
+
+  target 'ICObserver_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
