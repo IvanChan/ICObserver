@@ -115,7 +115,7 @@
     }
 }
 
-- (void)enumerateObserverOnMainThreadUsingBlockAsync:(void (^)(id observer))block
+- (void)enumerateObserverOnMainThreadAsyncUsingBlock:(void (^)(id observer))block
 {
     if (block == nil)
     {

@@ -14,6 +14,6 @@
 - (void)removeObserver:(id)observer;
 
 - (void)enumerateObserverOnMainThreadUsingBlock:(void (^)(id observer))block;
-- (void)enumerateObserverOnMainThreadUsingBlockAsync:(void (^)(id observer))block;
+- (void)enumerateObserverOnMainThreadAsyncUsingBlock:(void (^)(id observer))block;
 
 @end

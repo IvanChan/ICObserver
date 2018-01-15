@@ -96,7 +96,7 @@
 }
 
 - (void)enumerateObserverForKey:(NSString *)key
-    onMainThreadUsingBlockAsync:(void (^)(id observer))block
+    onMainThreadAsyncUsingBlock:(void (^)(id observer))block
 {
     if (key.length <= 0 || block == nil)
     {
