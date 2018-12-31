@@ -14,6 +14,9 @@
 - (void)removeObserver:(id)observer forKey:(NSString *)key;
 
 - (void)enumerateObserverForKey:(NSString *)key
+                     usingBlock:(void (^)(id observer))block;
+
+- (void)enumerateObserverForKey:(NSString *)key
          onMainThreadUsingBlock:(void (^)(id observer))block;
 
 - (void)enumerateObserverForKey:(NSString *)key

@@ -95,47 +95,7 @@
     }
 }
 
-- (void)enumerateObserverOnMainThreadUsingBlock:(void (^)(id observer))block
-{
-    if (block == nil)
-    {
-        return;
-    }
-    
-    if ([NSThread isMainThread])
-    {
-        [self _enumerateObserverOnMainThreadUsingBlock:block];
-    }
-    else
-    {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            
-            [self _enumerateObserverOnMainThreadUsingBlock:block];
-        });
-    }
-}
-
-- (void)enumerateObserverOnMainThreadAsyncUsingBlock:(void (^)(id observer))block
-{
-    if (block == nil)
-    {
-        return;
-    }
-    
-    if ([NSThread isMainThread])
-    {
-        [self _enumerateObserverOnMainThreadUsingBlock:block];
-    }
-    else
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self _enumerateObserverOnMainThreadUsingBlock:block];
-        });
-    }
-}
-
-- (void)_enumerateObserverOnMainThreadUsingBlock:(void (^)(id observer))block
+- (void)enumerateObserverUsingBlock:(void (^)(id observer))block
 {
     @synchronized (self)
     {
@@ -155,6 +115,46 @@
         
         self.isEnumerating = NO;
         
+    }
+}
+
+- (void)enumerateObserverOnMainThreadUsingBlock:(void (^)(id observer))block
+{
+    if (block == nil)
+    {
+        return;
+    }
+    
+    if ([NSThread isMainThread])
+    {
+        [self enumerateObserverUsingBlock:block];
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            [self enumerateObserverUsingBlock:block];
+        });
+    }
+}
+
+- (void)enumerateObserverOnMainThreadAsyncUsingBlock:(void (^)(id observer))block
+{
+    if (block == nil)
+    {
+        return;
+    }
+    
+    if ([NSThread isMainThread])
+    {
+        [self enumerateObserverUsingBlock:block];
+    }
+    else
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self enumerateObserverUsingBlock:block];
+        });
     }
 }
 

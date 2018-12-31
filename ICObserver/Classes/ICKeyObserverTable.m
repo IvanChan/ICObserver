@@ -75,6 +75,18 @@
 }
 
 - (void)enumerateObserverForKey:(NSString *)key
+                     usingBlock:(void (^)(id observer))block
+{
+    @synchronized (self)
+    {
+        ICObserverTable *table = self.observerHash[key];
+        [table enumerateObserverUsingBlock:^(id observer) {
+            block(observer);
+        }];
+    }
+}
+    
+- (void)enumerateObserverForKey:(NSString *)key
          onMainThreadUsingBlock:(void (^)(id observer))block
 {
     if (key.length <= 0 || block == nil)
@@ -84,13 +96,13 @@
     
     if ([NSThread isMainThread])
     {
-        [self _enumerateObserverForKey:key onMainThreadUsingBlock:block];
+        [self enumerateObserverForKey:key usingBlock:block];
     }
     else
     {
         dispatch_sync(dispatch_get_main_queue(), ^{
         
-            [self _enumerateObserverForKey:key onMainThreadUsingBlock:block];
+            [self enumerateObserverForKey:key usingBlock:block];
         });
     }
 }
@@ -105,26 +117,14 @@
     
     if ([NSThread isMainThread])
     {
-        [self _enumerateObserverForKey:key onMainThreadUsingBlock:block];
+        [self enumerateObserverForKey:key usingBlock:block];
     }
     else
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self _enumerateObserverForKey:key onMainThreadUsingBlock:block];
+            [self enumerateObserverForKey:key usingBlock:block];
         });
-    }
-}
-
-- (void)_enumerateObserverForKey:(NSString *)key
-         onMainThreadUsingBlock:(void (^)(id observer))block
-{
-    @synchronized (self)
-    {
-        ICObserverTable *table = self.observerHash[key];
-        [table enumerateObserverOnMainThreadUsingBlock:^(id observer) {
-            block(observer);
-        }];
     }
 }
 
